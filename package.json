@@ -1,0 +1,26 @@
+{
+  "name": "node-ipware",
+  "version": "0.0.1",
+  "description": "Returns the real IP address of users in Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/un33k/node-ipware.git"
+  },
+  "keywords": [
+    "routeable",
+    "ip",
+    "address",
+    "client",
+    "node"
+  ],
+  "author": "Val Neekman @ Neekware Inc.",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/un33k/node-ipware/issues"
+  },
+  "homepage": "https://github.com/un33k/node-ipware"
+}
