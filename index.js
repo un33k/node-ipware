@@ -4,13 +4,12 @@ var ipware_prefix_list = [];
 
 
 module.exports = function (config_file) {
-    var module = {};
 
     if (!ipware_defs){
-        var fname = config_file || __dirname + 'defaults.json';
+        var fname = config_file || __dirname + '/defaults.json';
         try {
             ipware_defs = require(fname);
-        catch(err) {
+        } catch(err) {
             console.log(err);
             return {};
         }
@@ -29,33 +28,48 @@ module.exports = function (config_file) {
 
     function get_non_routable_prefix_list(json){
         for (var prefix in json) {
-            if (prefix.indexOf('IPV4') == 0 || prefix.indexOf('IPV6') == 0){
-                ipware_prefix_list.push(prefix);
+            if (prefix.indexOf('IPV4') === 0 || prefix.indexOf('IPV6') === 0){
+                var private_prefix = json[prefix];
+                ipware_prefix_list = ipware_prefix_list.concat(private_prefix);
             }
         }
     }
 
-    module.ip = function (req, res) {
-        req.is_ip_routable = false;
+    function is_private_ip(ip){
+        var ip = ip.toLowerCase();
+        for (var i = 0; i < ipware_prefix_list.length; i++){
+            var prefix = ipware_prefix_list[i];
+            if (ip.indexOf(prefix.toLowerCase()) === 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function getip (req, res, next) {
+        req.clientIpRoutable = false;
         req.clientIp = null;
+
         for (var i = 0; i < ipware_precedence_list.length; i++) {
             try {
                 var value = req.headers[ipware_precedence_list[i].trim()];
-            } catch {
+            } catch (err) {
                 continue;
             }
             if (value){
                 var ips = value.split(',');
-                for (var j=0; j < ips.length; j++){
-                    var ip = ips[i].toLowerCase();
-                    for (var k=0; k=ipware_prefix_list.length; k++){
-                        var prefix = ipware_prefix_list[k].toLowerCase();
-                        if (ip.indexOf(prefix) != 0){
+                for (var j = 0; j < ips.length; j++){
+                    var ip = ips[j].trim();
+                    if (ip){
+                        if (is_private_ip(ip)){
+                            if (!req.clientIp){
+                                req.clientIp = ip;
+                            }
+                        } else {
                             req.clientIp = ip;
-                            req.is_ip_routable = true;
+                            req.clientIpRoutable = true;
                             return;
                         }
-                        req.clientIp = ip;
                     }
                 }
             }
@@ -63,7 +77,8 @@ module.exports = function (config_file) {
         if (!req.clientIp){
             req.clientIp = req.connection.remoteAddress;
         }
+        next();
     };
 
-    return module;
+    return getip;
 };
