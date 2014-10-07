@@ -45,18 +45,18 @@ module.exports = function (config_file) {
         return false;
     }
 
-    function is_valid_ipv4(ip):{
+    function is_valid_ipv4(ip){
         ipv4_pattern = /^(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)$/;
-        if (!ipv4_pattern.test(str)) {
+        if (!ipv4_pattern.test(ip)) {
             return false;
         }
-        var token = str.split('.');
+        var token = ip.split('.');
         return token[0] <= 255 && token[1] <= 255 && token[2] <= 255 && token[3] <= 255;
     }
 
-    function is_valid_ipv6(ip):{
+    function is_valid_ipv6(ip){
         ipv6_pattern = /^::|^::1|^([a-fA-F0-9]{1,4}::?){1,7}([a-fA-F0-9]{1,4})$/;
-        return ipv6_pattern.test(str)
+        return ipv6_pattern.test(ip)
     }
 
     function is_valid_ip(ip){
