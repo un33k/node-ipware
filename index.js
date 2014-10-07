@@ -6,7 +6,7 @@ var ipware_prefix_list = [];
 module.exports = function (config_file) {
 
     if (!ipware_defs){
-        var fname = config_file || __dirname + 'defaults.json';
+        var fname = config_file || __dirname + '/defaults.json';
         try {
             ipware_defs = require(fname);
         } catch(e) {
@@ -45,6 +45,25 @@ module.exports = function (config_file) {
         return false;
     }
 
+
+    function is_valid_ipv4(ip):{
+        ipv4_pattern = /^(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)$/;
+        if (!ipv4_pattern.test(str)) {
+            return false;
+        }
+        var token = str.split('.');
+        return token[0] <= 255 && token[1] <= 255 && token[2] <= 255 && token[3] <= 255;
+    }
+
+    function is_valid_ipv6(ip):{
+        ipv6_pattern = /^::|^::1|^([a-fA-F0-9]{1,4}::?){1,7}([a-fA-F0-9]{1,4})$/;
+        return ipv6_pattern.test(str)
+    }
+
+    function is_valid_ip(ip){
+        return is_valid_ipv4(ip) || is_valid_ipv6(ip);
+    }
+
     function getip (req, res, next) {
         req.clientIpRoutable = false;
         req.clientIp = null;
@@ -59,7 +78,7 @@ module.exports = function (config_file) {
                 var ips = value.split(',');
                 for (var j = 0; j < ips.length; j++){
                     var ip = ips[j].trim();
-                    if (ip){
+                    if (ip && is_valid_ip(ip)){
                         if (is_private_ip(ip)){
                             if (!req.clientIp){
                                 req.clientIp = ip;
@@ -78,6 +97,5 @@ module.exports = function (config_file) {
         }
         next();
     };
-
     return getip;
 };
