@@ -45,7 +45,6 @@ module.exports = function (config_file) {
         return false;
     }
 
-
     function is_valid_ipv4(ip):{
         ipv4_pattern = /^(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)$/;
         if (!ipv4_pattern.test(str)) {

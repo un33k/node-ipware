@@ -20,7 +20,6 @@
     "url": "https://github.com/un33k/node-ipware/issues"
   },
   "homepage": "https://github.com/un33k/node-ipware",
-  "dependencies": {}
-  "devDependencies": {
-  },
+  "dependencies": {},
+  "devDependencies": {}
 }
