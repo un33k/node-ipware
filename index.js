@@ -6,12 +6,11 @@ var ipware_prefix_list = [];
 module.exports = function (config_file) {
 
     if (!ipware_defs){
-        var fname = config_file || __dirname + '/defaults.json';
+        var fname = config_file || __dirname + 'defaults.json';
         try {
             ipware_defs = require(fname);
-        } catch(err) {
-            console.log(err);
-            return {};
+        } catch(e) {
+            throw e;
         }
     }
 
@@ -21,8 +20,8 @@ module.exports = function (config_file) {
     function get_precedence_list(json){
         try {
             ipware_precedence_list = json.IPWARE_HTTP_HEADER_PRECEDENCE_ORDER;
-        } catch(err) {
-            console.log(err);
+        } catch(e) {
+            throw e;
         }
     }
 
@@ -53,7 +52,7 @@ module.exports = function (config_file) {
         for (var i = 0; i < ipware_precedence_list.length; i++) {
             try {
                 var value = req.headers[ipware_precedence_list[i].trim()];
-            } catch (err) {
+            } catch (e) {
                 continue;
             }
             if (value){
