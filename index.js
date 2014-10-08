@@ -1,52 +1,65 @@
 
+var is_initialized = false;
 var ipware_defs = null;
 var ipware_precedence_list = [];
 var ipware_prefix_list = [];
 
 
 module.exports = function (config_file) {
+    var _me = {};
+    var _conf = config_file || __dirname + '/defaults.json';
 
-    if (!ipware_defs){
-        var fname = config_file || __dirname + '/defaults.json';
+    function get_precedence_list() {
         try {
-            ipware_defs = require(fname);
+            ipware_precedence_list = ipware_defs.IPWARE_HTTP_HEADER_PRECEDENCE_ORDER;
         } catch(e) {
             throw e;
         }
     }
 
-    get_precedence_list(ipware_defs);
-    get_non_routable_prefix_list(ipware_defs);
-
-    function get_precedence_list(json){
-        try {
-            ipware_precedence_list = json.IPWARE_HTTP_HEADER_PRECEDENCE_ORDER;
-        } catch(e) {
-            throw e;
-        }
-    }
-
-    function get_non_routable_prefix_list(json){
-        for (var prefix in json) {
+    function get_non_routable_prefix_list() {
+        for (var prefix in ipware_defs) {
             if (prefix.indexOf('IPV4') === 0 || prefix.indexOf('IPV6') === 0){
-                var private_prefix = json[prefix];
+                var private_prefix = ipware_defs[prefix];
                 ipware_prefix_list = ipware_prefix_list.concat(private_prefix);
             }
         }
+        if (ipware_prefix_list.length === 0) {
+            throw "No private IP prefix found in " + _conf;
+        }
     }
 
-    function is_private_ip(ip){
+    function get_config_file() {
+        try {
+            ipware_defs = require(_conf);
+        } catch(e) {
+            throw e;
+        }
+    }
+
+    function initialize() {
+            if (!is_initialized){
+            get_config_file();
+            get_precedence_list();
+            get_non_routable_prefix_list();
+        }
+    }
+
+    initialize();
+    console.log("IPWare Initialized!");
+
+    _me.is_private_ip = function (ip) {
         var ip = ip.toLowerCase();
-        for (var i = 0; i < ipware_prefix_list.length; i++){
+        for (var i = 0; i < ipware_prefix_list.length; i++) {
             var prefix = ipware_prefix_list[i];
-            if (ip.indexOf(prefix.toLowerCase()) === 0){
+            if (ip.indexOf(prefix.toLowerCase()) === 0) {
                 return true;
             }
         }
         return false;
     }
 
-    function is_valid_ipv4(ip){
+    _me.is_valid_ipv4 = function (ip) {
         ipv4_pattern = /^(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)$/;
         if (!ipv4_pattern.test(ip)) {
             return false;
@@ -55,16 +68,16 @@ module.exports = function (config_file) {
         return token[0] <= 255 && token[1] <= 255 && token[2] <= 255 && token[3] <= 255;
     }
 
-    function is_valid_ipv6(ip){
+    _me.is_valid_ipv6 = function (ip) {
         ipv6_pattern = /^::|^::1|^([a-fA-F0-9]{1,4}::?){1,7}([a-fA-F0-9]{1,4})$/;
         return ipv6_pattern.test(ip)
     }
 
-    function is_valid_ip(ip){
-        return is_valid_ipv4(ip) || is_valid_ipv6(ip);
+    _me.is_valid_ip = function (ip) {
+        return _me.is_valid_ipv4(ip) || _me.is_valid_ipv6(ip);
     }
 
-    function getip (req, res, next) {
+    _me.get_ip = function (req) {
         req.clientIpRoutable = false;
         req.clientIp = null;
 
@@ -76,11 +89,11 @@ module.exports = function (config_file) {
             }
             if (value){
                 var ips = value.split(',');
-                for (var j = 0; j < ips.length; j++){
+                for (var j = 0; j < ips.length; j++) {
                     var ip = ips[j].trim();
-                    if (ip && is_valid_ip(ip)){
-                        if (is_private_ip(ip)){
-                            if (!req.clientIp){
+                    if (ip && _me.is_valid_ip(ip)) {
+                        if (_me.is_private_ip(ip)) {
+                            if (!req.clientIp) {
                                 req.clientIp = ip;
                             }
                         } else {
@@ -92,10 +105,10 @@ module.exports = function (config_file) {
                 }
             }
         }
-        if (!req.clientIp){
+        if (!req.clientIp) {
             req.clientIp = req.connection.remoteAddress;
         }
-        next();
     };
-    return getip;
+
+    return _me;
 };
