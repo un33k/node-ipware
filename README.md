@@ -34,8 +34,8 @@ How to use
     // 1. `clientIP`, 2. `isRoutable`
     // Where:
     //    `clientIP` holds the client's IP address
-    //    'isRoutable` is `true` for `public` IP addresses. (externally route-able)
-    //                 is `false` for `private` IP addresses. (not externally route-able)
+    //    'isRoutable` is `true` if user's IP is `public`. (externally route-able)
+    //                 is `false` if user's IP is `private`. (not externally route-able)
 
    ```
 
