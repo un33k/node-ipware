@@ -47,8 +47,10 @@ Advanced users:
     // for `IPWARE_HTTP_HEADER_PRECEDENCE_ORDER`, the
     // check is done from top to bottom where the request `headers`
     // is examined for the existence of the IP address field.
-    // for private PREFIX lists, any IP address that doesn't
-    // match those patterns is considered publicly routable.
+    // all lists that start with `IPV` are examined and if any IP
+    // address starts with any of those patterns are considered
+    // `private` IP, otherwise considered `public` IP which are
+    // externally routable.
 
     // simply copy the following content into a JSON file.
     // modify it to suit your needs and place it in your project
