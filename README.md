@@ -48,6 +48,12 @@ Advanced users:
     // check is done from top to bottom.
     // for private PREFIX lists, any IP address that doesn't
     // match those patterns is considered publicly routable.
+
+    // simply copy the following content into a JSON file.
+    // modify it to suit your needs and place it in your project
+    // under version control. Then you can use it like:
+    // var get_ip = require('ipware')('../path/to/your/conf.json').get_ip;
+
     {
       "IPWARE_HTTP_HEADER_PRECEDENCE_ORDER": [
         "HTTP_X_FORWARDED_FOR",
