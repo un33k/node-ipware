@@ -45,7 +45,8 @@ Advanced users:
    ```javascript
     // you can use your own config file as below.
     // for `IPWARE_HTTP_HEADER_PRECEDENCE_ORDER`, the
-    // check is done from top to bottom.
+    // check is done from top to bottom where the request `headers`
+    // is examined for the existence of the IP address filed.
     // for private PREFIX lists, any IP address that doesn't
     // match those patterns is considered publicly routable.
 
