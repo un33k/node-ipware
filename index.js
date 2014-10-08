@@ -46,7 +46,6 @@ module.exports = function (config_file) {
     }
 
     initialize();
-    console.log("IPWare Initialized!");
 
     _me.is_private_ip = function (ip) {
         var ip = ip.toLowerCase();
