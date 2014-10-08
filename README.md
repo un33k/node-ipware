@@ -23,7 +23,7 @@ How to use
 ====================
 
    ```javascript
-    // In your js file (e.g. app.js)
+    // in your js file (e.g. app.js)
     var get_ip = require('ipware')().get_ip;
     app.use(function(req, res, next) {
         get_ip(req)
