@@ -58,6 +58,51 @@ describe('HTTP_X_FORWARDED_FOR Malformed IP Address FallBack on HTTP_X_REAL_IP',
   });
 });
 
+describe('HTTP_X_FORWARDED_FOR NO IP Address FallBack on HTTP_X_REAL_IP', function() {
+  it('should return the next best match IP if proxy returns no ip', function() {
+    request.headers.HTTP_X_FORWARDED_FOR = '';
+    request.headers.HTTP_X_REAL_IP = '177.139.233.132';
+    request.headers.REMOTE_ADDR = '177.139.233.133';
+    get_ip(request);
+    assert.equal(request.clientIp, '177.139.233.132');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP NO IP Address FallBack on REMOTE_ADDR', function() {
+  it('should return the next best match IP if proxy and x_real_ip return no ip', function() {
+    request.headers.HTTP_X_FORWARDED_FOR = '';
+    request.headers.HTTP_X_REAL_IP = '';
+    request.headers.REMOTE_ADDR = '177.139.233.133';
+    get_ip(request);
+    assert.equal(request.clientIp, '177.139.233.133');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('HTTP_X_FORWARDED_FOR NO IP Address FallBack on HTTP_X_REAL_IP', function() {
+  it('should return the next best match IP if proxy returns no ip and x_real_ip is private', function() {
+    request.headers.HTTP_X_FORWARDED_FOR = '';
+    request.headers.HTTP_X_REAL_IP = '192.168.255.182';
+    request.headers.REMOTE_ADDR = '177.139.233.133';
+    get_ip(request);
+    assert.equal(request.clientIp, '177.139.233.133');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('HTTP_X_FORWARDED_FOR NO IP Address FallBack on HTTP_X_REAL_IP', function() {
+  it('should return the next best match IP if proxy returns no ip and x_real_ip is private', function() {
+    request.headers.HTTP_X_FORWARDED_FOR = '127.0.0.1';
+    request.headers.HTTP_X_REAL_IP = '';
+    request.headers.REMOTE_ADDR = '';
+    get_ip(request);
+    assert.equal(request.clientIp, '127.0.0.1');
+    assert.equal(request.clientIpRoutable, false);
+  });
+});
+
+
 
 
 
