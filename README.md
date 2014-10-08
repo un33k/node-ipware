@@ -23,7 +23,7 @@ How to use
 ====================
 
    ```javascript
-    // in your js file (e.g. app.js)
+    // In your js file (e.g. app.js)
     var get_ip = require('ipware')().get_ip;
     app.use(function(req, res, next) {
         get_ip(req)
@@ -43,18 +43,21 @@ Advanced users:
 ====================
 
    ```javascript
-    // you can use your own config file as below.
-    // for `IPWARE_HTTP_HEADER_PRECEDENCE_ORDER`, the
+    // You can also use your own config file as below.
+    // for `IPWARE_HTTP_HEADER_PRECEDENCE_ORDER` items, the
     // check is done from top to bottom where the request `headers`
     // is examined for the existence of the IP address field.
-    // all lists that start with `IPV` are examined and if any IP
-    // address starts with any of those patterns are considered
-    // `private` IP, otherwise considered `public` IP which are
-    // externally routable.
 
-    // simply copy the following content into a JSON file.
+    // All lists that start with `IPV` are examined and if an IP
+    // address starts with any of those patterns the IP is considered
+    // `private`, otherwise the IP is considered `public` which means
+    // the IP is externally routable. (reachable through the Internet :)
+
+    // Simply copy the following content into a JSON file and
     // modify it to suit your needs and place it in your project
-    // under version control. Then you can use it like:
+    // under version control.
+
+    // Then you can use it like:
     // var get_ip = require('ipware')('../path/to/your/conf.json').get_ip;
 
     {
