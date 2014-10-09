@@ -148,6 +148,9 @@ Advanced users:
 Running the tests
 ====================
 
+To run the tests against the current environment:
+
+    npm test
 
 License
 ====================
