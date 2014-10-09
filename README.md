@@ -3,7 +3,6 @@ Node IPware
 
 **A Node application to retrieve user's IP address**
 
-
 Overview
 ====================
 
