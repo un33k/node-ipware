@@ -11,7 +11,7 @@ Overview
 How to install
 ====================
 
-    1. npm install node-ipware
+    1. npm install ipware
     2. git clone http://github.com/un33k/node-ipware
         a. npm install node-ipware
     3. wget https://github.com/un33k/node-ipware/zipball/master
