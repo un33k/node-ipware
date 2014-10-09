@@ -92,7 +92,9 @@ module.exports = function (config_file) {
                     var ip = ips[j].trim();
                     if (ip && _me.is_valid_ip(ip)) {
                         if (_me.is_private_ip(ip)) {
-                            if (!req.clientIp || req.clientIp === '127.0.0.1' || req.clientIp.toLowerCase() === '::1') {
+                            if (!  req.clientIp
+                                || req.clientIp === '127.0.0.1'
+                                || req.clientIp.toLowerCase() === '::1') {
                                 req.clientIp = ip;
                             }
                         } else {
