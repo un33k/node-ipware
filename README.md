@@ -30,11 +30,11 @@ How to use
     });
 
     // `get_ip` adds two fields to your request object
-    // 1. `clientIP`, 2. `isRoutable`
+    // 1. `clientIP`, 2. `clientIpRoutable`
     // Where:
     //    `clientIP` holds the client's IP address
-    //    'isRoutable` is `true` if user's IP is `public`. (externally route-able)
-    //                 is `false` if user's IP is `private`. (not externally route-able)
+    //    'clientIpRoutable` is `true` if user's IP is `public`. (externally route-able)
+    //                       is `false` if user's IP is `private`. (not externally route-able)
 
    ```
 
