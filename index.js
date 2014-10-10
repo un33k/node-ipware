@@ -19,7 +19,7 @@ module.exports = function (config_file) {
 
     function get_non_routable_prefix_list() {
         for (var prefix in ipware_defs) {
-            if (prefix.indexOf('IPV4') === 0 || prefix.indexOf('IPV6') === 0){
+            if (prefix.indexOf('IPV4') === 0 || prefix.indexOf('IPV6') === 0) {
                 var private_prefix = ipware_defs[prefix];
                 ipware_prefix_list = ipware_prefix_list.concat(private_prefix);
             }
@@ -38,14 +38,17 @@ module.exports = function (config_file) {
     }
 
     function initialize() {
-            if (!is_initialized){
+        if (!is_initialized) {
             get_config_file();
             get_precedence_list();
             get_non_routable_prefix_list();
         }
     }
 
-    initialize();
+    _me.is_loopback_ip = function (ip) {
+        var _ip = ip.toLowerCase().trim();
+        return _ip === '127.0.0.1' || _ip === '::1';
+    }
 
     _me.is_private_ip = function (ip) {
         var ip = ip.toLowerCase();
@@ -76,39 +79,53 @@ module.exports = function (config_file) {
         return _me.is_valid_ipv4(ip) || _me.is_valid_ipv6(ip);
     }
 
+    _me.get_headers_attribute = function (headers, key) {
+        var value = null;
+        if (key.toLowerCase() in headers) {
+            value = headers[key.toLowerCase()];
+        } else {
+            if (key in headers) {
+                value = headers[key];
+            }
+        }
+        return value;
+    }
+
     _me.get_ip = function (req) {
+
+        initialize();
         req.clientIpRoutable = false;
         req.clientIp = null;
+        var value = null;
 
         for (var i = 0; i < ipware_precedence_list.length; i++) {
-            try {
-                var value = req.headers[ipware_precedence_list[i].trim()];
-            } catch (e) {
-                continue;
-            }
-            if (value){
+            value = _me.get_headers_attribute(req.headers, ipware_precedence_list[i].trim());
+            if (value) {
                 var ips = value.split(',');
                 for (var j = 0; j < ips.length; j++) {
                     var ip = ips[j].trim();
                     if (ip && _me.is_valid_ip(ip)) {
                         if (_me.is_private_ip(ip)) {
-                            if (!  req.clientIp
-                                || req.clientIp === '127.0.0.1'
-                                || req.clientIp.toLowerCase() === '::1') {
+                            if (!req.clientIp || (!_me.is_loopback_ip(ip) &&
+                                _me.is_loopback_ip(req.clientIp))) {
                                 req.clientIp = ip;
                             }
                         } else {
                             req.clientIp = ip;
                             req.clientIpRoutable = true;
-                            return;
+                            return {clientIp: req.clientIp, clientIpRoutable: req.clientIpRoutable}
                         }
                     }
                 }
             }
         }
         if (!req.clientIp) {
-            req.clientIp = req.connection.remoteAddress;
+            req.clientIp = req.connection.remoteAddress ||
+                           req.socket.remoteAddress ||
+                           req.connection.socket.remoteAddress;
         }
+
+        return {clientIp: req.clientIp, clientIpRoutable: req.clientIpRoutable}
     };
 
     return _me;
