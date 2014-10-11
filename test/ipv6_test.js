@@ -197,3 +197,39 @@ describe('get_ip(): IPV6: http_x_real_ip', function() {
     assert.equal(request.clientIpRoutable, true);
   });
 });
+
+describe('get_ip(): IPV6: http_x_real_ip', function() {
+  it('test_fallback_on_request.connection.remoteAddress.private', function() {
+    var request = {headers: {}};
+    request.connection = {};
+    request.connection.remoteAddress = "::1";
+    get_ip(request);
+    assert.equal(request.clientIp, '::1');
+    assert.equal(request.clientIpRoutable, false);
+  });
+});
+
+describe('get_ip(): IPV6: http_x_real_ip', function() {
+  it('test_fallback_on_request.connection.remoteAddress.public', function() {
+    var request = {headers: {}};
+    request.connection = {};
+    request.connection.remoteAddress = "74dC::02bA";
+    get_ip(request);
+    assert.equal(request.clientIp, '74dC::02bA');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_ip(): IPV6: http_x_real_ip', function() {
+  it('test_fallback_on_request.socket.remoteAddress.public', function() {
+    var request = {headers: {}};
+    request.socket = {};
+    request.socket.remoteAddress = "74dC::02bA";
+    get_ip(request);
+    assert.equal(request.clientIp, '74dC::02bA');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+
+

@@ -91,6 +91,24 @@ module.exports = function (config_file) {
         return value;
     }
 
+    _me.get_local_ip = function (req) {
+        var ip = '127.0.0.1';
+        try {
+            ip = req.connection.remoteAddress;
+        } catch (e) {
+            try {
+                ip = req.socket.remoteAddress;
+            } catch (e) {
+                try {
+                    ip = req.connection.socket.remoteAddress;
+                } catch (e) {
+                    ip = '127.0.0.1';
+                }
+            }
+        }
+        return ip;
+    }
+
     _me.get_ip = function (req) {
 
         initialize();
@@ -120,9 +138,10 @@ module.exports = function (config_file) {
             }
         }
         if (!req.clientIp) {
-            req.clientIp = req.connection.remoteAddress ||
-                           req.socket.remoteAddress ||
-                           req.connection.socket.remoteAddress;
+            req.clientIp = _me.get_local_ip(req);
+            if (!_me.is_private_ip(req.clientIp)){
+                req.clientIpRoutable = true;
+            }
         }
 
         return {clientIp: req.clientIp, clientIpRoutable: req.clientIpRoutable}
