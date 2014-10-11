@@ -25,11 +25,13 @@ How to use
     // In your js file (e.g. app.js)
     var get_ip = require('ipware')().get_ip;
     app.use(function(req, res, next) {
-        get_ip(req)
+        var ip_info = get_ip(req);
+        console.log(ip_info);
+        // { clientIp: '127.0.0.1', clientIpRoutable: false }
         next();
     });
 
-    // `get_ip` adds two fields to your request object
+    // `get_ip` also adds two fields to your request object
     // 1. `clientIP`, 2. `clientIpRoutable`
     // Where:
     //    `clientIP` holds the client's IP address
