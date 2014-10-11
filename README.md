@@ -115,7 +115,7 @@ Advanced users:
         "192.168."
       ],
 
-      "IPV4_RODCAST_IP_PREFIX": [
+      "IPV4_BRODCAST_IP_PREFIX": [
         "255.255.255."
       ],
 
@@ -127,11 +127,11 @@ Advanced users:
         "2001:db8:"
       ],
 
-      "IPV6_CLASS_PRIVATE_BLOCK_IP_PREFIX": [
+      "IPV6_PRIVATE_BLOCK_IP_PREFIX": [
         "fc00:"
       ],
 
-      "IPV6_LOCAL_LINK_UNICAST_IP_PREFIX": [
+      "IPV6_LINK_LOCAL_UNICAST_IP_PREFIX": [
         "fe80:"
       ],
 
@@ -143,6 +143,7 @@ Advanced users:
         "::1"
       ]
     }
+
 
    ```
 
