@@ -42,6 +42,7 @@ module.exports = function (config_file) {
             get_config_file();
             get_precedence_list();
             get_non_routable_prefix_list();
+            is_initialized = true;
         }
     }
 
