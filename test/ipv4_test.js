@@ -15,6 +15,18 @@ describe('get_ip(): IPV4: HTTP_X_FORWARDED_FOR', function() {
 });
 
 describe('get_ip(): IPV4: HTTP_X_FORWARDED_FOR', function() {
+  it('test_x_forwarded_for_multiple_right_most_proxy', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_FORWARDED_FOR = '192.168.255.182, 198.84.193.157, 10.0.0.0, 127.0.0.1, 177.139.233.139';
+    request.headers.HTTP_X_REAL_IP = '177.139.233.132';
+    request.headers.REMOTE_ADDR = '177.139.233.133';
+    get_ip(request, right_most_proxy=true);
+    assert.equal(request.clientIp, '177.139.233.139');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_ip(): IPV4: HTTP_X_FORWARDED_FOR', function() {
   it('test_x_forwarded_for_multiple_bad_address', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = 'unknown, 192.168.255.182, 10.0.0.0, 127.0.0.1, 198.84.193.157, 177.139.233.139';

@@ -110,17 +110,21 @@ module.exports = function (config_file) {
         return ip;
     }
 
-    _me.get_ip = function (req) {
+    _me.get_ip = function (req, right_most_proxy) {
 
         initialize();
         req.clientIpRoutable = false;
         req.clientIp = null;
         var value = null;
+        var right_most_proxy = right_most_proxy || false;
 
         for (var i = 0; i < ipware_precedence_list.length; i++) {
             value = _me.get_headers_attribute(req.headers, ipware_precedence_list[i].trim());
             if (value) {
                 var ips = value.split(',');
+                if (right_most_proxy) {
+                    ips = ips.reverse();
+                }
                 for (var j = 0; j < ips.length; j++) {
                     var ip = ips[j].trim();
                     if (ip && _me.is_valid_ip(ip)) {
