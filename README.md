@@ -3,6 +3,8 @@ Node IPware
 
 **A Node application to retrieve user's IP address**
 
+[![build-status-image-travis]][travis]
+
 Overview
 ====================
 
@@ -166,3 +168,5 @@ License
 
 Released under a ([BSD](LICENSE.md)) license.
 
+[build-status-image-travis]: https://secure.travis-ci.org/un33k/node-ipware.png?branch=master
+[travis]: http://travis-ci.org/un33k/node-ipware?branch=master
