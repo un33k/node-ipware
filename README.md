@@ -40,10 +40,10 @@ How to use
     //    'clientIpRoutable` is `true` if user's IP is `public`. (externally route-able)
     //                       is `false` if user's IP is `private`. (not externally route-able)
 
-    // **Advanced option:** By default the left most address in the `HTTP_X_FORWARDED_FOR` is returned.
-    // However, depending on your preference and needs, you can change this behavior by passing
-    // the `right_most_proxy=True` to the API.
-    // **Note:** Not all proxies are equal. So left to right or right to left preference is not a
+    // Advanced option: By default the left most address in the `HTTP_X_FORWARDED_FOR` is
+    // returned.  However, depending on your preference and needs, you can change this
+    // behavior by passing the `right_most_proxy=True` to the API.
+    // Note: Not all proxies are equal. So left to right or right to left preference is not a
     // rule that all proxy servers follow.
 
     var ip_info = get_ip(req, right_most_proxy=True)
