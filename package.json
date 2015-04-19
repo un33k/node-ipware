@@ -1,6 +1,6 @@
 {
   "name": "ipware",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Returns the real IP address of users in Node.js",
   "main": "index.js",
   "repository": {
