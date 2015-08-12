@@ -189,3 +189,23 @@ describe('get_ip(): IPV4: http_x_real_ip', function() {
     assert.equal(request.clientIpRoutable, true);
   });
 });
+
+describe('get_ip(): IPV4: Test 1.0.0.0/8 blocks', function() {
+  it('test_1_0_0_0_block', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_REAL_IP = '1.0.0.0';
+    get_ip(request);
+    assert.equal(request.clientIp, '1.0.0.0');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_ip(): IPV4: Test 2.0.0.0/8 blocks', function() {
+  it('test_2_0_0_0_block', function() {
+    var request = {headers: {}};
+    request.headers.REMOTE_ADDR = '2.0.0.1';
+    get_ip(request);
+    assert.equal(request.clientIp, '2.0.0.1');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
