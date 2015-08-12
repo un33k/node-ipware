@@ -87,8 +87,6 @@ Advanced users:
 
       "IPV4_EXTERNALLY_NON_ROUTABLE_IP_PREFIX": [
         "0.",
-        "1.",
-        "2."
       ],
 
       "IPV4_CLASS_A_PRIVATE_BLOCK_IP_PREFIX": [
