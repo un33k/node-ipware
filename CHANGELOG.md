@@ -1,3 +1,15 @@
+## 0.0.6
+
+Enhancement:
+
+  - Added support for 1.0.0.0/8 and 2.0.0.0/8 blocks
+
+## 0.0.5
+
+Enhancement:
+
+  - Return the local loop address if no ip is found
+
 ## 0.0.4
 
 Enhancement:
