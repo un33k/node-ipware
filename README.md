@@ -3,7 +3,7 @@ Node IPware
 
 **A Node application to retrieve user's IP address**
 
-[![Build Status](https://secure.travis-ci.org/un33k/node-ipware.png?branch=master)](http://travis-ci.org/un33k/node-ipware) 
+[![Build Status](https://secure.travis-ci.org/un33k/node-ipware.png?branch=master)](http://travis-ci.org/un33k/node-ipware)
 [![Downloads](http://img.shields.io/npm/dm/ipware.svg)](https://npmjs.org/package/ipware)
 
 
@@ -82,6 +82,7 @@ Advanced users:
         "HTTP_FORWARDED_FOR",
         "HTTP_FORWARDED",
         "HTTP_VIA",
+        "X_FORWARDED_FOR",
         "REMOTE_ADDR"
       ],
 

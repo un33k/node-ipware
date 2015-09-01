@@ -1,3 +1,9 @@
+## 0.0.7
+
+Enhancement:
+
+  - Added support for x_forwarded_for
+
 ## 0.0.6
 
 Enhancement:
