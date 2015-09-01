@@ -3,7 +3,7 @@ var get_ip = require('..')().get_ip,
 
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR', function() {
-  it('test_x_forwarded_for_multiple', function() {
+  it('test_http_x_forwarded_for_multiple', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = '3ffe:1900:4545:3:200:f8ff:fe21:67cf, 74dc::02ba';
     request.headers.HTTP_X_REAL_IP = '74dc::02ba';
@@ -14,8 +14,19 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR', function() {
   });
 });
 
+describe('get_ip(): IPV6: X_FORWARDED_FOR', function() {
+  it('test_x_forwarded_for_single', function() {
+    var request = {headers: {}};
+    request.headers.X_FORWARDED_FOR = '3ffe:1900:4545:3:200:f8ff:fe21:67cf';
+    request.headers.REMOTE_ADDR = '74dc::02ba';
+    get_ip(request);
+    assert.equal(request.clientIp, '3ffe:1900:4545:3:200:f8ff:fe21:67cf');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR', function() {
-  it('test_x_forwarded_for_multiple_bad_address', function() {
+  it('test_http_x_forwarded_for_multiple_bad_address', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = 'unknown, ::1/128, 74dc::02ba';
     request.headers.HTTP_X_REAL_IP = '3ffe:1900:4545:3:200:f8ff:fe21:67cf';
@@ -27,7 +38,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR', function() {
 });
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR', function() {
-  it('test_x_forwarded_for_singleton', function() {
+  it('test_http_x_forwarded_for_singleton', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = '74dc::02ba';
     request.headers.HTTP_X_REAL_IP = '3ffe:1900:4545:3:200:f8ff:fe21:67cf';
@@ -39,7 +50,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR', function() {
 });
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP', function() {
-  it('test_x_forwarded_for_singleton_private_address', function() {
+  it('test_http_x_forwarded_for_singleton_private_address', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = '::1/128';
     request.headers.HTTP_X_REAL_IP = '74dc::02ba';
@@ -51,7 +62,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP', function() {
 });
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP', function() {
-  it('test_bad_x_forwarded_for_fallback_on_x_real_ip', function() {
+  it('test_bad_http_x_forwarded_for_fallback_on_x_real_ip', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = 'unknown ::1/128';
     request.headers.HTTP_X_REAL_IP = '74dc::02ba';
@@ -63,7 +74,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP', function() {
 });
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP', function() {
-  it('test_empty_x_forwarded_for_fallback_on_x_real_ip', function() {
+  it('test_empty_http_x_forwarded_for_fallback_on_x_real_ip', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = '';
     request.headers.HTTP_X_REAL_IP = '74dc::02ba';
@@ -75,7 +86,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP', function() {
 });
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP & REMOTE_ADDR', function() {
-  it('test_empty_x_forwarded_for_empty_x_real_ip_fallback_on_remote_addr', function() {
+  it('test_empty_http_x_forwarded_for_empty_x_real_ip_fallback_on_remote_addr', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = '';
     request.headers.HTTP_X_REAL_IP = '';
@@ -87,7 +98,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP & REMOTE_ADDR', 
 });
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP & REMOTE_ADDR', function() {
-  it('test_empty_x_forwarded_for_private_x_real_ip_fallback_on_remote_addr', function() {
+  it('test_empty_http_x_forwarded_for_private_x_real_ip_fallback_on_remote_addr', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = '';
     request.headers.HTTP_X_REAL_IP = '::1/128';
@@ -99,7 +110,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP & REMOTE_ADDR', 
 });
 
 describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP & REMOTE_ADDR', function() {
-  it('test_private_x_forward_for_ip_addr', function() {
+  it('test_private_http_x_forward_for_ip_addr', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_FORWARDED_FOR = '::1/128';
     request.headers.HTTP_X_REAL_IP = '';
@@ -135,7 +146,7 @@ describe('get_ip(): IPV6: HTTP_X_FORWARDED_FOR & HTTP_X_REAL_IP & REMOTE_ADDR', 
 });
 
 describe('get_ip(): IPV6: HTTP_X_REAL_IP & REMOTE_ADDR', function() {
-  it('test_missing_x_forwarded', function() {
+  it('test_missing_http_x_forwarded', function() {
     var request = {headers: {}};
     request.headers.HTTP_X_REAL_IP = '74dc::02ba';
     request.headers.REMOTE_ADDR = '74dc::02ba';
@@ -146,7 +157,7 @@ describe('get_ip(): IPV6: HTTP_X_REAL_IP & REMOTE_ADDR', function() {
 });
 
 describe('get_ip(): IPV6: REMOTE_ADDR', function() {
-  it('test_missing_x_forwarded_missing_real_ip', function() {
+  it('test_missing_http_x_forwarded_missing_real_ip', function() {
     var request = {headers: {}};
     request.headers.REMOTE_ADDR = '74dc::02ba';
     get_ip(request);
@@ -156,7 +167,7 @@ describe('get_ip(): IPV6: REMOTE_ADDR', function() {
 });
 
 describe('get_ip(): IPV6: HTTP_X_REAL_IP & REMOTE_ADDR', function() {
-  it('test_missing_x_forwarded_missing_real_ip_mix_case', function() {
+  it('test_missing_http_x_forwarded_missing_real_ip_mix_case', function() {
     var request = {headers: {}};
     request.headers.REMOTE_ADDR = '74dC::02bA';
     get_ip(request);
@@ -197,6 +208,7 @@ describe('get_ip(): IPV6: http_x_real_ip', function() {
     assert.equal(request.clientIpRoutable, true);
   });
 });
+
 
 describe('get_ip(): IPV6: http_x_real_ip', function() {
   it('test_fallback_on_request.connection.remoteAddress.private', function() {

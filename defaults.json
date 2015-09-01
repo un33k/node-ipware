@@ -8,6 +8,7 @@
     "HTTP_FORWARDED_FOR",
     "HTTP_FORWARDED",
     "HTTP_VIA",
+    "X_FORWARDED_FOR",
     "REMOTE_ADDR"
   ],
 
