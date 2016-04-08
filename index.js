@@ -81,15 +81,27 @@ module.exports = function (config_file) {
     }
 
     _me.get_headers_attribute = function (headers, key) {
-        var value = null;
-        if (key.toLowerCase() in headers) {
-            value = headers[key.toLowerCase()];
-        } else {
-            if (key in headers) {
-                value = headers[key];
-            }
+        key_upper = key.toUpperCase();
+        if (key_upper in headers) {
+            return headers[key_upper];
         }
-        return value;
+
+        key_lower = key.toLowerCase();
+        if (key_lower in headers) {
+            return headers[key_lower];
+        }
+
+        alt_key_lower = key_lower.replace(/_/g, '-');
+        if (alt_key_lower in headers) {
+            return headers[alt_key_lower];
+        }
+
+        alt_key_upper = alt_key_lower.toUpperCase()
+        if (alt_key_upper in headers) {
+            return headers[alt_key_upper];
+        }
+
+        return null;
     }
 
     _me.get_local_ip = function (req) {

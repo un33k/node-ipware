@@ -1,3 +1,11 @@
+## 0.0.8
+
+Enhancement:
+
+  - Added support for proxies with `underscores_in_headers off;`
+  - Handling hyphen as delimiter - ex: `X-FORWARDED-FOR` instead of `X_FORWARDED_FOR`
+  - Up version node.js in .travis.yml
+
 ## 0.0.7
 
 Enhancement:
