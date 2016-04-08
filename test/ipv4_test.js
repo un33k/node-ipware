@@ -215,9 +215,6 @@ describe('get_ip(): IPV4: X_FORWARDED_FOR and HTTP_X_FORWARDED_FOR', function() 
   });
 });
 
-
-
-
 describe('get_ip(): IPV4: Test 1.0.0.0/8 blocks', function() {
   it('test_1_0_0_0_block', function() {
     var request = {headers: {}};
@@ -234,6 +231,15 @@ describe('get_ip(): IPV4: Test 2.0.0.0/8 blocks', function() {
     request.headers.REMOTE_ADDR = '2.0.0.1';
     get_ip(request);
     assert.equal(request.clientIp, '2.0.0.1');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_ip(): IPV4: X-FORWARDED-FOR', function() {
+  it('test_http_x_forwarded_for_precedence-hyphenated', function() {
+    var request = {headers: {'X-FORWARDED-FOR': '80.10.1.10'}};
+    get_ip(request);
+    assert.equal(request.clientIp, '80.10.1.10');
     assert.equal(request.clientIpRoutable, true);
   });
 });
