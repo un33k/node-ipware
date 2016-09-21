@@ -57,7 +57,7 @@ Advanced users:
    ```javascript
     // 1. Trusted Proxies:
     // *************************
-    // To only get client ip addresses from your own trusted proxy server, you can use `get_trusted_ip()`.
+    // To only get client ip addresses from your own trusted proxy server(s), use `get_trusted_ip()`.
     // In your js file (e.g. app.js)
     var get_trusted_ip = require('ipware')().get_trusted_ip;
     var trusted_proxies = ['177.144.11.100', '177.144.11.101'];
