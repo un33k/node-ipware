@@ -55,7 +55,7 @@ Advanced users:
 ====================
 
    ```javascript
-    // 1. Trusted Proxy Feature:
+    // 1. Trusted Proxies:
     // *************************
     // To only get client ip addresses from your own trusted proxy server, you can use `get_trusted_ip()`.
     // In your js file (e.g. app.js)
