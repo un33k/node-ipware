@@ -190,7 +190,6 @@ module.exports = function (config_file) {
         var value = null;
 
         if (trusted_proxies.length >= 1) {
-
             for (var i = 0; i < ipware_proxy_precedence_list.length; i++) {
                 value = _me.get_headers_attribute(req.headers, ipware_proxy_precedence_list[i].trim());
                 if (value) {
