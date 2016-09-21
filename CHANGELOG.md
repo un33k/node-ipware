@@ -3,6 +3,7 @@
 Enhancement:
   - Remove Leaks
   - Add trusted proxy support
+  - Add node 6.x.x support
   - Change to MIT licensing
 
 ## 0.0.8
