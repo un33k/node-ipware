@@ -1,4 +1,5 @@
 var get_ip = require('..')().get_ip,
+    get_trusted_ip = require('..')().get_trusted_ip,
     assert = require('assert');
 
 
@@ -240,6 +241,60 @@ describe('get_ip(): IPV4: X-FORWARDED-FOR', function() {
     var request = {headers: {'X-FORWARDED-FOR': '80.10.1.10'}};
     get_ip(request);
     assert.equal(request.clientIp, '80.10.1.10');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_trusted_ip(): IPV4: EMPTY DEFAULT IPWARE_TRUSTED_PROXY_LIST', function() {
+  it('test_trusted_ip_default_config', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_FORWARDED_FOR = '177.139.100.100, 177.139.233.200, 177.139.233.139';
+    get_trusted_ip(request);
+    assert.equal(request.clientIp, '127.0.0.1');
+    assert.equal(request.clientIpRoutable, false);
+  });
+});
+
+describe('get_trusted_ip(): IPV4: PROXY LIST AS PARAM (VALID)', function() {
+  it('test_trusted_ip_proxy_list_as_params_single', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_FORWARDED_FOR = '177.139.100.100, 177.139.233.200, 177.139.233.139';
+    var trusted_proxy_list = ['177.139.233.139'];
+    get_trusted_ip(request, trusted_proxy_list);
+    assert.equal(request.clientIp, '177.139.100.100');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_trusted_ip(): IPV4: PROXY LIST AS PARAM (VALID)', function() {
+  it('test_trusted_ip_proxy_list_as_params_multi', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_FORWARDED_FOR = '177.139.100.100, 177.139.233.200, 177.139.233.139';
+    var trusted_proxy_list = ['177.139.233.135', '177.139.233.139', '177.139.233.140'];
+    get_trusted_ip(request, trusted_proxy_list);
+    assert.equal(request.clientIp, '177.139.100.100');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_trusted_ip(): IPV4: PROXY LIST AS PARAM (INVALID)', function() {
+  it('test_trusted_ip_proxy_list_as_params_invalid', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_FORWARDED_FOR = '177.139.100.100, 177.139.233.200, 177.139.233.130';
+    var trusted_proxy_list = ['177.139.233.139'];
+    get_trusted_ip(request, trusted_proxy_list);
+    assert.equal(request.clientIp, '127.0.0.1');
+    assert.equal(request.clientIpRoutable, false);
+  });
+});
+
+describe('get_trusted_ip(): IPV4: PROXY LIST AS PARAM - X_FORWARDED_FOR(VALID)', function() {
+  it('test_trusted_ip_proxy_list_as_params_multi_x_forwarded_for', function() {
+    var request = {headers: {}};
+    request.headers.X_FORWARDED_FOR = '177.139.100.100, 177.139.233.200, 177.139.233.139';
+    var trusted_proxy_list = ['177.139.233.135', '177.139.233.139', '177.139.233.140'];
+    get_trusted_ip(request, trusted_proxy_list);
+    assert.equal(request.clientIp, '177.139.100.100');
     assert.equal(request.clientIpRoutable, true);
   });
 });

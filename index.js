@@ -1,6 +1,8 @@
 var is_initialized = false;
 var ipware_defs = null;
 var ipware_precedence_list = [];
+var ipware_proxy_precedence_list = [];
+var ipware_proxy_list = [];
 var ipware_prefix_list = [];
 
 
@@ -11,6 +13,22 @@ module.exports = function (config_file) {
     function get_precedence_list() {
         try {
             ipware_precedence_list = ipware_defs.IPWARE_HTTP_HEADER_PRECEDENCE_ORDER;
+        } catch(e) {
+            throw e;
+        }
+    }
+
+    function get_proxy_precedence_list() {
+        try {
+            ipware_proxy_precedence_list = ipware_defs.IPWARE_HTTP_HEADER_PROXY_PRECEDENCE_ORDER;
+        } catch(e) {
+            throw e;
+        }
+    }
+
+    function get_proxy_list() {
+        try {
+            ipware_proxy_list = ipware_defs.IPWARE_TRUSTED_PROXY_LIST;
         } catch(e) {
             throw e;
         }
@@ -40,6 +58,8 @@ module.exports = function (config_file) {
         if (!is_initialized) {
             get_config_file();
             get_precedence_list();
+            get_proxy_precedence_list();
+            get_proxy_list();
             get_non_routable_prefix_list();
             is_initialized = true;
         }
@@ -155,9 +175,48 @@ module.exports = function (config_file) {
         }
         if (!req.clientIp) {
             req.clientIp = _me.get_local_ip(req);
-            if (!_me.is_private_ip(req.clientIp)){
-                req.clientIpRoutable = true;
+            req.clientIpRoutable = !_me.is_private_ip(req.clientIp);
+        }
+
+        return {clientIp: req.clientIp, clientIpRoutable: req.clientIpRoutable}
+    };
+
+    _me.get_trusted_ip = function (req, trusted_proxies, right_most_proxy) {
+        initialize();
+        var trusted_proxies = trusted_proxies || ipware_proxy_list;
+        var right_most_proxy = right_most_proxy || false;
+        req.clientIpRoutable = false;
+        req.clientIp = null;
+        var value = null;
+
+        if (trusted_proxies.length >= 1) {
+
+            for (var i = 0; i < ipware_proxy_precedence_list.length; i++) {
+                value = _me.get_headers_attribute(req.headers, ipware_proxy_precedence_list[i].trim());
+                if (value) {
+                    var ips = value.split(',');
+                    if (ips.length > 1 && right_most_proxy) {
+                        ips = ips.reverse();
+                    }
+                    if (ips.length > 1) {
+                        for (var j = 0; j < trusted_proxies.length; j++) {
+                            if (trusted_proxies[j] === ips[ips.length-1].trim()) {
+                                var ip = ips[0].trim();
+                                if (ip && _me.is_valid_ip(ip)) {
+                                    req.clientIp = ip;
+                                    req.clientIpRoutable = !_me.is_private_ip(ip);
+                                    return {clientIp: req.clientIp, clientIpRoutable: req.clientIpRoutable}
+                                }
+                            }
+                        }
+                    }
+                }
             }
+        }
+
+        if (!req.clientIp) {
+            req.clientIp = _me.get_local_ip(req);
+            req.clientIpRoutable = !_me.is_private_ip(req.clientIp);
         }
 
         return {clientIp: req.clientIp, clientIpRoutable: req.clientIpRoutable}

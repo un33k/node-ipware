@@ -2,7 +2,8 @@
 
 Enhancement:
   - Remove Leaks
-  - Add proxy support
+  - Add trusted proxy support
+  - Change to MIT licensing
 
 ## 0.0.8
 

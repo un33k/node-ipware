@@ -1,4 +1,5 @@
 var get_ip = require('..')().get_ip,
+    get_trusted_ip = require('..')().get_trusted_ip,
     assert = require('assert');
 
 
@@ -245,6 +246,17 @@ describe('get_ip(): IPV6: X-FORWARDED-FOR', function() {
     var request = {headers: {'X-FORWARDED-FOR': '74dC::02bA'}};
     get_ip(request);
     assert.equal(request.clientIp, '74dC::02bA');
+    assert.equal(request.clientIpRoutable, true);
+  });
+});
+
+describe('get_trusted_ip(): IPV6: HTTP_X_FORWARDED_FOR', function() {
+  it('test_http_x_forwarded_for_multiple', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_FORWARDED_FOR = '3ffe:1900:4545:3:200:f8ff:fe21:67cf, 74dc::02ba, 74dc::02bb';
+    var trusted_proxy_list = ['74dc::02bb'];
+    get_trusted_ip(request, trusted_proxy_list);
+    assert.equal(request.clientIp, '3ffe:1900:4545:3:200:f8ff:fe21:67cf');
     assert.equal(request.clientIpRoutable, true);
   });
 });

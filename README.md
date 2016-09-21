@@ -42,13 +42,35 @@ How to use
     //    'clientIpRoutable` is `true` if user's IP is `public`. (externally route-able)
     //                       is `false` if user's IP is `private`. (not externally route-able)
 
-    // Advanced option: By default the left most address in the `HTTP_X_FORWARDED_FOR` is
-    // returned.  However, depending on your preference and needs, you can change this
+    // Advanced option: By default the left most address in the `HTTP_X_FORWARDED_FOR` or `X_FORWARDED_FOR`
+    // is returned.  However, depending on your preference and needs, you can change this
     // behavior by passing the `right_most_proxy=True` to the API.
     // Note: Not all proxies are equal. So left to right or right to left preference is not a
     // rule that all proxy servers follow.
 
     var ip_info = get_ip(req, right_most_proxy=True)
+
+    // `Trusted Proxy Feature`
+    // To only get clients ip addresses from your own trusted proxy server, you can use `get_trusted_ip()`.
+    // In your js file (e.g. app.js)
+    var get_trusted_ip = require('ipware')().get_trusted_ip;
+    app.use(function(req, res, next) {
+        var trusted_proxies = ['177.144.11.100', '177.144.11.101'];
+        var ip_info = get_trusted_ip(req, trusted_proxies);
+        console.log(ip_info);
+        // { clientIp: '177.100.44.22', clientIpRoutable: true }
+        next();
+    });
+
+    // Alternatively, you can pass in the trusted proxies via the configuration file.
+    {
+      ...
+      "IPWARE_TRUSTED_PROXY_LIST": [
+        '177.144.11.100',
+        '177.144.11.101'
+      ],
+      ...
+    }
    ```
 
 Advanced users:
@@ -84,6 +106,15 @@ Advanced users:
         "HTTP_VIA",
         "X_FORWARDED_FOR",
         "REMOTE_ADDR"
+      ],
+
+      "IPWARE_HTTP_HEADER_PROXY_PRECEDENCE_ORDER": [
+        "HTTP_X_FORWARDED_FOR",
+        "HTTP_FORWARDED_FOR",
+        "X_FORWARDED_FOR"
+      ],
+
+      "IPWARE_TRUSTED_PROXY_LIST": [
       ],
 
       "IPV4_EXTERNALLY_NON_ROUTABLE_IP_PREFIX": [

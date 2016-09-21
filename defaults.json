@@ -12,6 +12,14 @@
     "REMOTE_ADDR"
   ],
 
+  "IPWARE_HTTP_HEADER_PROXY_PRECEDENCE_ORDER": [
+    "HTTP_X_FORWARDED_FOR",
+    "X_FORWARDED_FOR"
+  ],
+
+  "IPWARE_TRUSTED_PROXY_LIST": [
+  ],
+
   "IPV4_EXTERNALLY_NON_ROUTABLE_IP_PREFIX": [
     "0."
   ],
@@ -77,9 +85,6 @@
 
   "IPV6_LOOPBACK_IP_PREFIX": [
     "::1"
-  ],
-
-  "IPWARE_TRUSTED_PROXY_LIST": [
-    
   ]
+
 }
