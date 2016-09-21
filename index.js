@@ -1,4 +1,3 @@
-
 var is_initialized = false;
 var ipware_defs = null;
 var ipware_precedence_list = [];
@@ -47,8 +46,8 @@ module.exports = function (config_file) {
     }
 
     _me.is_loopback_ip = function (ip) {
-        var _ip = ip.toLowerCase().trim();
-        return _ip === '127.0.0.1' || _ip === '::1';
+        var ip = ip.toLowerCase().trim();
+        return ip === '127.0.0.1' || ip === '::1';
     }
 
     _me.is_private_ip = function (ip) {
@@ -63,7 +62,7 @@ module.exports = function (config_file) {
     }
 
     _me.is_valid_ipv4 = function (ip) {
-        ipv4_pattern = /^(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)$/;
+        var ipv4_pattern = /^(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)\.(\d?\d?\d)$/;
         if (!ipv4_pattern.test(ip)) {
             return false;
         }
@@ -72,7 +71,7 @@ module.exports = function (config_file) {
     }
 
     _me.is_valid_ipv6 = function (ip) {
-        ipv6_pattern = /^::|^::1|^([a-fA-F0-9]{1,4}::?){1,7}([a-fA-F0-9]{1,4})$/;
+        var ipv6_pattern = /^::|^::1|^([a-fA-F0-9]{1,4}::?){1,7}([a-fA-F0-9]{1,4})$/;
         return ipv6_pattern.test(ip)
     }
 
@@ -81,22 +80,22 @@ module.exports = function (config_file) {
     }
 
     _me.get_headers_attribute = function (headers, key) {
-        key_upper = key.toUpperCase();
+        var key_upper = key.toUpperCase();
         if (key_upper in headers) {
             return headers[key_upper];
         }
 
-        key_lower = key.toLowerCase();
+        var key_lower = key.toLowerCase();
         if (key_lower in headers) {
             return headers[key_lower];
         }
 
-        alt_key_lower = key_lower.replace(/_/g, '-');
+        var alt_key_lower = key_lower.replace(/_/g, '-');
         if (alt_key_lower in headers) {
             return headers[alt_key_lower];
         }
 
-        alt_key_upper = alt_key_lower.toUpperCase()
+        var alt_key_upper = alt_key_lower.toUpperCase()
         if (alt_key_upper in headers) {
             return headers[alt_key_upper];
         }

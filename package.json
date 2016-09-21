@@ -1,6 +1,6 @@
 {
   "name": "ipware",
-  "version": "0.0.8",
+  "version": "1.0.0",
   "description": "Returns the real IP address of users in Node.js",
   "main": "index.js",
   "repository": {
@@ -11,10 +11,9 @@
     "ip address",
     "client IP address",
     "user IP address"
-
   ],
   "author": "Val Neekman @ Neekware Inc.",
-  "license": "BSD",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/un33k/node-ipware/issues"
   },
@@ -24,6 +23,6 @@
     "mocha": "~2.0.0"
   },
   "scripts": {
-    "test": "mocha  --ignore-leaks --reporter spec test/*_test.js"
+    "test": "mocha --reporter spec test/*_test.js"
   }
 }

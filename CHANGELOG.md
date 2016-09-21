@@ -1,3 +1,9 @@
+## 1.0.0
+
+Enhancement:
+  - Remove Leaks
+  - Add proxy support
+
 ## 0.0.8
 
 Enhancement:

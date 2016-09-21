@@ -167,4 +167,4 @@ To run the tests against the current environment:
 License
 ====================
 
-Released under a ([BSD](LICENSE.md)) license.
+Released under a ([MIT](LICENSE)) license.
