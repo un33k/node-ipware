@@ -51,11 +51,11 @@ How to use
     var ip_info = get_ip(req, right_most_proxy=True)
 
     // `Trusted Proxy Feature`
-    // To only get clients ip addresses from your own trusted proxy server, you can use `get_trusted_ip()`.
+    // To only get client ip addresses from your own trusted proxy server, you can use `get_trusted_ip()`.
     // In your js file (e.g. app.js)
     var get_trusted_ip = require('ipware')().get_trusted_ip;
+    var trusted_proxies = ['177.144.11.100', '177.144.11.101'];
     app.use(function(req, res, next) {
-        var trusted_proxies = ['177.144.11.100', '177.144.11.101'];
         var ip_info = get_trusted_ip(req, trusted_proxies);
         console.log(ip_info);
         // { clientIp: '177.100.44.22', clientIpRoutable: true }
