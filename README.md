@@ -110,7 +110,6 @@ Advanced users:
 
       "IPWARE_HTTP_HEADER_PROXY_PRECEDENCE_ORDER": [
         "HTTP_X_FORWARDED_FOR",
-        "HTTP_FORWARDED_FOR",
         "X_FORWARDED_FOR"
       ],
 
