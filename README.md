@@ -49,8 +49,14 @@ How to use
     // rule that all proxy servers follow.
 
     var ip_info = get_ip(req, right_most_proxy=True)
+   ```
 
-    // `Trusted Proxy Feature`
+Advanced users:
+====================
+
+   ```javascript
+    // 1. Trusted Proxy Feature:
+    // *************************
     // To only get client ip addresses from your own trusted proxy server, you can use `get_trusted_ip()`.
     // In your js file (e.g. app.js)
     var get_trusted_ip = require('ipware')().get_trusted_ip;
@@ -71,12 +77,9 @@ How to use
       ],
       ...
     }
-   ```
 
-Advanced users:
-====================
-
-   ```javascript
+    // 2. Customizable configuration file:
+    // ***********************************
     // You can also use your own config file as below.
     // for `IPWARE_HTTP_HEADER_PRECEDENCE_ORDER` items, the
     // check is done from top to bottom where the request `headers`
