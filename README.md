@@ -3,9 +3,9 @@ Node IPware
 
 **A Node application to retrieve user's IP address**
 
-[![Build Status](https://secure.travis-ci.org/un33k/node-ipware.png?branch=master)](http://travis-ci.org/un33k/node-ipware)
-[![Downloads](http://img.shields.io/npm/dm/ipware.svg)](https://npmjs.org/package/ipware)
-
+[![status-image]][status-link]
+[![version-image]][version-link]
+[![download-image]][download-link]
 
 Overview
 ====================
@@ -334,3 +334,12 @@ Sponsors
 ====================
 
 [![Surge](https://www.surgeforward.com/wp-content/themes/understrap-master/images/logo.png)](https://github.com/surgeforward)
+
+[status-image]: https://secure.travis-ci.org/un33k/node-ipware.png?branch=master
+[status-link]: http://travis-ci.org/un33k/node-ipware?branch=master
+[version-image]: https://img.shields.io/npm/v/ipware.svg
+[version-link]: https://www.npmjs.com/package/ipware
+[coverage-image]: https://coveralls.io/repos/un33k/node-ipware/badge.svg
+[coverage-link]: https://coveralls.io/r/un33k/node-ipware
+[download-image]: https://img.shields.io/npm/dm/ipware.svg
+[download-link]: https://www.npmjs.com/package/ipware
