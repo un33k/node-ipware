@@ -221,6 +221,16 @@ describe('get_ip(): IPV6: http_x_real_ip', function() {
   });
 });
 
+describe('get_ip(): IPV6: to IPV4', function() {
+  it('test_ipv6_encapsulation_of_ipv4', function() {
+    var request = {headers: {}};
+    request.headers.HTTP_X_FORWARDED_FOR = "::ffff:127.0.0.1";
+    get_ip(request);
+    assert.equal(request.clientIp, '127.0.0.1');
+    assert.equal(request.clientIpRoutable, false);
+  });
+});
+
 describe('get_ip(): IPV6: http_x_real_ip', function() {
   it('test_fallback_on_request.connection.remoteAddress.public', function() {
     var request = {headers: {}, connection: {}};

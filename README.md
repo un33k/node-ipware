@@ -195,9 +195,23 @@ Running the tests
 
 To run the tests against the current environment:
 
+    npm install
     npm test
 
 License
 ====================
 
 Released under a ([MIT](LICENSE)) license.
+
+Version
+====================
+X.Y.Z Version
+
+    `MAJOR` version -- when you make incompatible API changes,
+    `MINOR` version -- when you add functionality in a backwards-compatible manner, and
+    `PATCH` version -- when you make backwards-compatible bug fixes.
+
+Sponsors
+====================
+
+[![Surge](https://www.surgeforward.com/wp-content/themes/understrap-master/images/logo.png)](https://github.com/surgeforward)
