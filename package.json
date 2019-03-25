@@ -1,6 +1,6 @@
 {
   "name": "ipware",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Returns the real IP address of users in Node.js",
   "main": "index.js",
   "repository": {
@@ -20,7 +20,7 @@
   "homepage": "https://github.com/un33k/node-ipware",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "~2.0.0"
+    "mocha": "^2.5.3"
   },
   "scripts": {
     "test": "mocha --reporter spec test/*_test.js"

@@ -65,6 +65,14 @@ module.exports = function (config_file) {
         }
     }
 
+    _me.cleanup_ip = function (ip) {
+        var ip = ip.trim();
+        if (ip.toLowerCase().startsWith('::ffff:')) {
+            return ip.substring('::ffff:'.length)
+        }
+        return ip;
+    }
+
     _me.is_loopback_ip = function (ip) {
         var ip = ip.toLowerCase().trim();
         return ip === '127.0.0.1' || ip === '::1';
@@ -157,7 +165,7 @@ module.exports = function (config_file) {
                     ips = ips.reverse();
                 }
                 for (var j = 0; j < ips.length; j++) {
-                    var ip = ips[j].trim();
+                    var ip = _me.cleanup_ip(ips[j]);
                     if (ip && _me.is_valid_ip(ip)) {
                         if (_me.is_private_ip(ip)) {
                             if (!req.clientIp || (!_me.is_loopback_ip(ip) &&
@@ -200,7 +208,7 @@ module.exports = function (config_file) {
                     if (ips.length > 1) {
                         for (var j = 0; j < trusted_proxies.length; j++) {
                             if (trusted_proxies[j] === ips[ips.length-1].trim()) {
-                                var ip = ips[0].trim();
+                                var ip = _me.cleanup_ip(ips[0]);
                                 if (ip && _me.is_valid_ip(ip)) {
                                     req.clientIp = ip;
                                     req.clientIpRoutable = !_me.is_private_ip(ip);

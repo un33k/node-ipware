@@ -3,9 +3,9 @@ Node IPware
 
 **A Node application to retrieve user's IP address**
 
-[![Build Status](https://secure.travis-ci.org/un33k/node-ipware.png?branch=master)](http://travis-ci.org/un33k/node-ipware)
-[![Downloads](http://img.shields.io/npm/dm/ipware.svg)](https://npmjs.org/package/ipware)
-
+[![status-image]][status-link]
+[![version-image]][version-link]
+[![download-image]][download-link]
 
 Overview
 ====================
@@ -120,11 +120,78 @@ Advanced users:
       ],
 
       "IPV4_EXTERNALLY_NON_ROUTABLE_IP_PREFIX": [
-        "0.",
+        "0."
       ],
 
       "IPV4_CLASS_A_PRIVATE_BLOCK_IP_PREFIX": [
         "10."
+      ],
+
+      "IPV4_CARRIER_GRADE_NAT_IP_PREFIX": [
+        "100.64.",
+        "100.65.",
+        "100.66.",
+        "100.67.",
+        "100.68.",
+        "100.69.",
+        "100.70.",
+        "100.71.",
+        "100.72.",
+        "100.73.",
+        "100.74.",
+        "100.75.",
+        "100.76.",
+        "100.77.",
+        "100.78.",
+        "100.79.",
+        "100.80.",
+        "100.81.",
+        "100.82.",
+        "100.83.",
+        "100.84.",
+        "100.85.",
+        "100.86.",
+        "100.87.",
+        "100.88.",
+        "100.89.",
+        "100.90.",
+        "100.91.",
+        "100.92.",
+        "100.93.",
+        "100.94.",
+        "100.95.",
+        "100.96.",
+        "100.97.",
+        "100.98.",
+        "100.99.",
+        "100.100.",
+        "100.101.",
+        "100.102.",
+        "100.103.",
+        "100.104.",
+        "100.105.",
+        "100.106.",
+        "100.107.",
+        "100.108.",
+        "100.109.",
+        "100.110.",
+        "100.111.",
+        "100.112.",
+        "100.113.",
+        "100.114.",
+        "100.115.",
+        "100.116.",
+        "100.117.",
+        "100.118.",
+        "100.119.",
+        "100.120.",
+        "100.121.",
+        "100.122.",
+        "100.123.",
+        "100.124.",
+        "100.125.",
+        "100.126.",
+        "100.127."
       ],
 
       "IPV4_LOCAL_LINK_BLOCK_IP_PREFIX": [
@@ -150,7 +217,11 @@ Advanced users:
         "172.31."
       ],
 
-      "IPV4_EXAMPLE_CODE_DOCUMENTATION_IP_PREFIX": [
+      "IPV4_INAA_SPECIAL_ADDRESS_REGISTRY_IP_PREFIX": [
+        "192.0.0."
+      ],
+
+      "IPV4_DOCUMENTATION_AND_EXAMPLE_CODE_192_IP_PREFIX": [
         "192.0.2."
       ],
 
@@ -158,8 +229,58 @@ Advanced users:
         "192.168."
       ],
 
+      "IPV4_INNER_NETWORK_COMMUNICATION_BETWEEN_TWO_SEPARATE_SUBNETS_IP_PREFIX": [
+        "198.18.",
+        "198.19."
+      ],
+
+      "IPV4_DOCUMENTATION_AND_EXAMPLE_CODE_198_IP_PREFIX": [
+        "198.51.100."
+      ],
+
+      "IPV4_DOCUMENTATION_AND_EXAMPLE_CODE_203_IP_PREFIX": [
+        "203.0.113."
+      ],
+
+      "IPV4_MULTICAST_IP_PREFIX": [
+        "224.",
+        "225.",
+        "226.",
+        "227.",
+        "228.",
+        "229.",
+        "230.",
+        "231.",
+        "232.",
+        "233.",
+        "234.",
+        "235.",
+        "236.",
+        "237.",
+        "238.",
+        "239."
+      ],
+
+      "IPV4_RESERVED_IP_PREFIX": [
+        "240.",
+        "241.",
+        "242.",
+        "243.",
+        "244.",
+        "245.",
+        "246.",
+        "247.",
+        "248.",
+        "249.",
+        "250.",
+        "251.",
+        "252.",
+        "253.",
+        "254."
+      ],
+      
       "IPV4_BRODCAST_IP_PREFIX": [
-        "255.255.255."
+        "255."
       ],
 
       "IPV4_LOOPBACK_IP_PREFIX": [
@@ -186,8 +307,6 @@ Advanced users:
         "::1"
       ]
     }
-
-
    ```
 
 Running the tests
@@ -195,9 +314,32 @@ Running the tests
 
 To run the tests against the current environment:
 
+    npm install
     npm test
 
 License
 ====================
 
 Released under a ([MIT](LICENSE)) license.
+
+Version
+====================
+X.Y.Z Version
+
+    `MAJOR` version -- when you make incompatible API changes,
+    `MINOR` version -- when you add functionality in a backwards-compatible manner, and
+    `PATCH` version -- when you make backwards-compatible bug fixes.
+
+Sponsors
+====================
+
+[![Surge](https://www.surgeforward.com/wp-content/themes/understrap-master/images/logo.png)](https://github.com/surgeforward)
+
+[status-image]: https://secure.travis-ci.org/un33k/node-ipware.png?branch=master
+[status-link]: http://travis-ci.org/un33k/node-ipware?branch=master
+[version-image]: https://img.shields.io/npm/v/ipware.svg
+[version-link]: https://www.npmjs.com/package/ipware
+[coverage-image]: https://coveralls.io/repos/un33k/node-ipware/badge.svg
+[coverage-link]: https://coveralls.io/r/un33k/node-ipware
+[download-image]: https://img.shields.io/npm/dm/ipware.svg
+[download-link]: https://www.npmjs.com/package/ipware
