@@ -146,7 +146,7 @@ module.exports = function (config_file) {
                 }
             }
         }
-        return ip || '127.0.0.1';
+        return _me.cleanup_ip(ip) || '127.0.0.1';
     }
 
     _me.get_ip = function (req, right_most_proxy) {
