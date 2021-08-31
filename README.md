@@ -1,3 +1,5 @@
+# Library was deprecated in favor of [`@fullerstack/nax-ipware`](https://github.com/neekware/fullerstack/tree/main/libs/nax-ipware)
+
 Node IPware
 ====================
 
@@ -333,7 +335,7 @@ X.Y.Z Version
 Sponsors
 ====================
 
-[![Surge](https://www.surgeforward.com/wp-content/themes/understrap-master/images/logo.png)](https://github.com/surgeforward)
+[Neekware Inc](http://neekware.com)
 
 [status-image]: https://secure.travis-ci.org/un33k/node-ipware.png?branch=master
 [status-link]: http://travis-ci.org/un33k/node-ipware?branch=master
